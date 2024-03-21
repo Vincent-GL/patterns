@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cstdlib>
+#include <memory>
 //strategy
 class DemonStrategy {
 public:
@@ -8,7 +9,7 @@ public:
 };
 
 //concrete strategies
-class Random : DemonStrategy {
+class Random : public DemonStrategy {
     char attack(char *data) const override {
         auto i = std::rand() % 3;
         char moves[] = { 'r', 'p', 's'};
@@ -16,26 +17,32 @@ class Random : DemonStrategy {
     }
 };
 
-
-class Rock : DemonStrategy {
+class Paper : public DemonStrategy {
     char attack(char *data) const override {
         return 'p';
     }
 };
 
-class Mirror : DemonStrategy {
+class Scissors : public DemonStrategy {
+    char attack(char *data) const override {
+        return 's';
+    }
+};
+
+class Rock : public DemonStrategy {
+    char attack(char *data) const override {
+        return 'r';
+    }
+};
+
+class Mirror : public DemonStrategy {
     char attack(char *data) const override {
         return data == nullptr ? 'p' : data[2];
     }
 };
 
-template <typename T>
-T maximum(T a, T b, T c) {
-    return a > b ? (a > c ? a : c) : (b > c ? b : c);
-}
 
-
-class MeanCounter : DemonStrategy {
+class MeanCounter : public DemonStrategy {
 char attack(char *data) const override {
         auto nb_p = 0;
         auto nb_s = 0;
@@ -68,8 +75,8 @@ char attack(char *data) const override {
 
 class Demon {
 public:
-    Demon(); // Constructor
-
+    Demon(std::unique_ptr<DemonStrategy> S); // Constructor
 private:
-    int _hp;
+    std::unique_ptr<DemonStrategy> _strategy;
+    bool Is_defeated(char p_move, char d_move);
 };

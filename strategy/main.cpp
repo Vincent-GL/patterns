@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Player.h"
+#include "Demon.h"
+#include <memory>
 
 int main(void) {
   Player *p = new Player();
-  char move;
+  /*char move;
   auto i = 0;
   while(i < 3){
     std::cout << "Choose : R(ock), P(aper) or S(cissors)";
@@ -30,5 +32,8 @@ int main(void) {
     }
     i ++;
   }
-  std::cout << p->Get_Last_Move()<<'\n';
+  std::cout << p->Get_Last_Move()<<'\n';*/
+  Demon d1(std::make_unique<Random>());
+  Demon d2(std::make_unique<Random>());
+  
 }
