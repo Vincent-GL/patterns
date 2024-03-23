@@ -76,7 +76,8 @@ char attack(char *data) const override {
 class Demon {
 public:
     Demon(std::unique_ptr<DemonStrategy> S); // Constructor
+    bool Is_defeated(char p_move, char *p_data);
 private:
     std::unique_ptr<DemonStrategy> _strategy;
-    bool Is_defeated(char p_move, char d_move);
+    
 };
