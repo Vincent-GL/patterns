@@ -7,7 +7,7 @@ Demon::Demon(std::unique_ptr<DemonStrategy> S) {
 
 bool Demon::Is_defeated(char p_move, char *p_data) {
   char d_move = _strategy->attack(p_data);
-  std::cout << "The demon uses " << d_move <<'\n';
+  Display_move(d_move);
   switch (p_move)
   {
   case 'r':

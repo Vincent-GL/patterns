@@ -76,6 +76,22 @@ char attack(char *data) const override {
     }
 };
 
+inline void Display_move(char move) {
+  switch (move) {
+    case 'r' :
+      std::cout << "The demon plays Rock!\n";
+      break;
+    case 'p' :
+      std::cout << "The demon plays Paper\n";
+      break;
+    case 's' :
+      std::cout << "The demon plays Scissors!\n";
+      break;
+    default:
+      break;
+  }
+}
+
 
 class Demon {
 public:
