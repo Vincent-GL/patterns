@@ -78,7 +78,8 @@ int main(void) {
   if (!is_defeated) {
     Demon d1(std::make_unique<Mirror>());
     Demon d2(std::make_unique<MeanCounter>());
-    while (defeated_demons < 4 and !is_defeated) {
+    while (defeated_demons < 2 and !is_defeated) {
+      std::cout << defeated_demons << '\n';
         incorrect_move = false;
         std::cout << "Choose : R(ock), P(aper) or S(cissors)";
         std::cin >> move;
@@ -125,6 +126,6 @@ int main(void) {
         }
       }
   }
-  std::cout << (is_defeated ? "you lose.\n" : "you win !");
+  std::cout << (is_defeated ? "you lose.\n" : "you win !\n");
   return 0;
 }

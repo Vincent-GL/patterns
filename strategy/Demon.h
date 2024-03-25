@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <memory>
+#define Player_moves_nb 3
+
 //strategy
 class DemonStrategy {
 public:
@@ -47,7 +49,8 @@ char attack(char *data) const override {
         auto nb_p = 0;
         auto nb_s = 0;
         auto nb_r = 0;
-        while (data != nullptr) {
+        int i = 0;
+        while (i != Player_moves_nb) {
             switch (*data)
             {
             case 'r':
@@ -61,6 +64,7 @@ char attack(char *data) const override {
                 break;
             }
             data++;
+            i++;
         }
         if (nb_p > nb_r && nb_s)
             return 's';
