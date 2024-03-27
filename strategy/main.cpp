@@ -29,6 +29,18 @@ inline char Read_Move() {
   return move;
 }
 
+inline bool Test_Defeat(Player *p, char move, bool incorrect_move) {
+    p->Set_Last_Move(move);
+    if (incorrect_move) {
+      std::cout << "you didn't win; The demon attacks you.\n";
+      return p->Take_Damage();
+    }
+    else {
+      std::cout <<  "You have beaten the demon! A new one appears.\n";
+      return false;
+    }
+}
+
 
 size_t First_Four_Demons (Player *p) {
   char move;
@@ -63,14 +75,7 @@ size_t First_Four_Demons (Player *p) {
         default :
           break;
       }
-      p->Set_Last_Move(move);
-      if (incorrect_move) {
-        std::cout << "you didn't win; The demon attacks you.\n";
-        is_defeated = p->Take_Damage();
-      }
-      else {
-        std::cout <<  "You have beaten the demon! A new one appears.\n";
-      }
+      is_defeated = Test_Defeat(p, move, incorrect_move);
     }
   }
   return defeated_demons;
@@ -79,7 +84,7 @@ size_t First_Four_Demons (Player *p) {
 int main(void) {
   Player *p = new Player();
   char move;
-  char incorrect_move;
+  bool incorrect_move;
   size_t defeated_demons = First_Four_Demons(p);
   
   if (defeated_demons == 4) {
@@ -87,32 +92,25 @@ int main(void) {
     Demon d1(std::make_unique<Mirror>());
     Demon d2(std::make_unique<MeanCounter>());
     while (defeated_demons < 6 and !is_defeated) {
-        move = Read_Move();
-        incorrect_move = move == 0;
-        if (incorrect_move) {
-          is_defeated = p->Take_Damage();
-        }
-        else {
-          switch (defeated_demons) {
-            case 4 :
-              !(d1.Is_defeated(move,p->Get_Last_Move())) ? incorrect_move = true : defeated_demons += 1;
-              break;
-            case 5 :
-              !(d2.Is_defeated(move,p->Get_Last_Move())) ? incorrect_move = true : defeated_demons += 1;
-              break;
-            default :
-              break;
-          }
-          p->Set_Last_Move(move);
-          if (incorrect_move) {
-            std::cout << "you didn't win; The demon attacks you.\n";
-            is_defeated = p->Take_Damage();
-          }
-          else {
-            std::cout <<  "You have beaten the demon!" << (defeated_demons == 6 ? "\nAll foes have been vanquished.\n" : "The final demon appears.\n");
-          }
-        }
+      move = Read_Move();
+      incorrect_move = move == 0;
+      if (incorrect_move) {
+        is_defeated = p->Take_Damage();
       }
+      else {
+        switch (defeated_demons) {
+          case 4 :
+            !(d1.Is_defeated(move,p->Get_Last_Move())) ? incorrect_move = true : defeated_demons += 1;
+            break;
+          case 5 :
+            !(d2.Is_defeated(move,p->Get_Last_Move())) ? incorrect_move = true : defeated_demons += 1;
+            break;
+          default :
+            break;
+        }
+        is_defeated = Test_Defeat(p,move,incorrect_move);
+      }
+    }
   }
   std::cout << (defeated_demons != 6 ? "you lose.\n" : "you win !\n");
   return 0;

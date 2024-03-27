@@ -46,9 +46,8 @@ class Mirror : public DemonStrategy {
 
 class MeanCounter : public DemonStrategy {
 char attack(char *data) const override {
-        auto nb_p = 0;
-        auto nb_s = 0;
-        auto nb_r = 0;
+        size_t nb_p, nb_s, nb_r;
+        nb_p = nb_s = nb_r = 0;
         int i = 0;
         while (i != Player_moves_nb) {
             switch (*data)
@@ -99,5 +98,4 @@ public:
     bool Is_defeated(char p_move, char *p_data);
 private:
     std::unique_ptr<DemonStrategy> _strategy;
-    
 };
